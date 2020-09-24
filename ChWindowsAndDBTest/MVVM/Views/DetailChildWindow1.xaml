@@ -1,0 +1,50 @@
+﻿<UserControl
+    x:Class="MVVM.Views.DetailChildWindow1"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVM.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:MVVM.Model"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <!--  please don't change anything here in DataContext!  -->
+    <!--  please specify a separate DataContext for UI elements  -->
+    <UserControl.DataContext>
+        <model:ViewModel />
+    </UserControl.DataContext>
+
+
+    <DockPanel LastChildFill="False">
+
+        <GroupBox
+            Margin="2"
+            DockPanel.Dock="Top"
+            Header="Search BY ID">
+
+            <TextBox Height="30" Text="{Binding SelectedID, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox.DataContext>
+                    <model:CarById />
+                </TextBox.DataContext>
+            </TextBox>
+        </GroupBox>
+
+
+        <GroupBox DockPanel.Dock="Top" Header="Take a look at manufacturer">
+            <Border BorderBrush="DarkKhaki" BorderThickness="2">
+                <TextBlock
+                    Height="30"
+                    Margin="2"
+                    Text="{Binding SelectedCar.Manufacturer}">
+
+                    <TextBlock.DataContext>
+                        <model:CarById />
+                    </TextBlock.DataContext>
+                </TextBlock>
+            </Border>
+        </GroupBox>
+
+    </DockPanel>
+</UserControl>

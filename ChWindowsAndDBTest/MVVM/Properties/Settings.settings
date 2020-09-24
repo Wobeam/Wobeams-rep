@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MVVM.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DataBaseFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Users\timun\Documents\GitHub\ChWindowsAndDbTest\ChWindowsAndDBTest\ChWindowDB\DBs\CarsDataBase.db</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

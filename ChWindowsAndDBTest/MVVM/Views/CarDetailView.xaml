@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="MVVM.Views.CarDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MVVM.Views"
+             xmlns:model="clr-namespace:MVVM.Model" 
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+             mah:DialogParticipation.Register="{Binding}"
+             d:DataContext="{d:DesignInstance model:Car}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    
+    <DockPanel LastChildFill="True">
+        <UniformGrid DockPanel.Dock="Bottom" Columns="2">
+            <Button Content="Edit" Command="{Binding EditCommand}" />
+            <Button Content="Delete" Command="{Binding DeleteCommand}" />
+        </UniformGrid>
+        
+        <ScrollViewer>
+            <StackPanel>
+                <mah:MetroHeader Header="ID">
+                    <TextBox Text="{Binding ID, StringFormat=N0}" IsReadOnly="True" mah:TextBoxHelper.Watermark="The ID will be generated automatically" />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Manufacturer">
+                    <TextBox Text="{Binding Manufacturer}" IsReadOnly="True"  />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Model">
+                    <TextBox Text="{Binding Model}" IsReadOnly="True"  />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Price">
+                    <TextBox Text="{Binding Price, StringFormat=C}" IsReadOnly="True" />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Discount">
+                    <TextBox Text="{Binding Discount}" IsReadOnly="True" />
+                </mah:MetroHeader>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</UserControl>

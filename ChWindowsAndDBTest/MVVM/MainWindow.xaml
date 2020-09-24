@@ -1,0 +1,157 @@
+﻿<mah:MetroWindow
+    x:Class="MVVM.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:MVVM"
+    xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="clr-namespace:MVVM.Model"
+    xmlns:scw="http://metro.mahapps.com/winfx/xaml/simplechildwindow"
+    xmlns:views="clr-namespace:MVVM.Views"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance model:ViewModel}"
+    mah:DialogParticipation.Register="{Binding}"
+    mc:Ignorable="d">
+
+    <mah:MetroWindow.Flyouts>
+        <mah:FlyoutsControl>
+            <mah:Flyout
+                Header="Settings"
+                IsModal="True"
+                IsOpen="{Binding ElementName=ButtonOpenSettings, Path=IsChecked, Mode=TwoWay}">
+                <StackPanel>
+                    <mah:MetroHeader Header="Path to the DataBase">
+                        <TextBox Text="{Binding Source={StaticResource My.Settings}, Path=Default.DataBaseFile}" />
+                    </mah:MetroHeader>
+                </StackPanel>
+            </mah:Flyout>
+        </mah:FlyoutsControl>
+    </mah:MetroWindow.Flyouts>
+
+    <DockPanel LastChildFill="True">
+        <ToolBarTray DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding AddCommand}" Content="Add Car" />
+                <Button
+                    Command="{Binding EditCarCommand}"
+                    CommandParameter="{Binding ElementName=DataGridCars, Path=SelectedItem}"
+                    Content="Edit Selected Car" />
+
+                <ToggleButton x:Name="TglShowChildWindow" Content="Show special view" />
+
+                <Separator />
+
+                <Button Command="{Binding RequeryCommand}" Content="Refresh" />
+                <Separator />
+                <Button
+                    x:Name="Service_btn"
+                    Command="{Binding ServiceCommand, Mode=OneWay}"
+                    Content="Service command" />
+                <Separator />
+                <ToggleButton x:Name="ButtonOpenSettings" Content="Settings" />
+                <Separator />
+                <ToggleButton x:Name="TglShowChildWindow1" Content="Show ChWindow1" />
+            </ToolBar>
+
+        </ToolBarTray>
+        <Rectangle
+            Height="1"
+            DockPanel.Dock="Top"
+            Fill="{DynamicResource MahApps.Brushes.Gray}" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="187*" />
+                <ColumnDefinition Width="11*" />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="47*" />
+                <ColumnDefinition Width="151*" />
+            </Grid.ColumnDefinitions>
+
+            <scw:ChildWindow
+                Grid.ColumnSpan="5"
+                Padding="20"
+                AllowMove="True"
+                CloseOnOverlay="True"
+                IsModal="true"
+                IsOpen="{Binding ElementName=TglShowChildWindow, Path=IsChecked, Mode=TwoWay}"
+                ShowCloseButton="True">
+                <views:DetailChildWindow MinWidth="500" />
+            </scw:ChildWindow>
+
+            <scw:ChildWindow
+                Title="ChWindow1"
+                Grid.ColumnSpan="5"
+                Padding="20"
+                AllowMove="True"
+                CloseOnOverlay="True"
+                IsModal="true"
+                IsOpen="{Binding ElementName=TglShowChildWindow1, Path=IsChecked, Mode=TwoWay}"
+                ShowCloseButton="True">
+                <views:DetailChildWindow1 MinWidth="500" />
+            </scw:ChildWindow>
+
+            <GroupBox
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="5,5,5.2,4.8"
+                Header="List">
+                <DataGrid
+                    x:Name="DataGridCars"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding Cars}">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.Header>
+                                <mah:FontIcon Glyph="&#xE70F;" />
+                            </DataGridTemplateColumn.Header>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                        Width="{DynamicResource MahApps.Sizes.Font.Content}"
+                                        Height="{DynamicResource MahApps.Sizes.Font.Content}"
+                                        Command="{Binding EditCommand}"
+                                        Style="{DynamicResource MahApps.Styles.Button.Flat}">
+                                        <mah:FontIcon Glyph="&#xE70F;" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Binding="{Binding ID, StringFormat=N0}" Header="ID" />
+                        <DataGridTextColumn Binding="{Binding Manufacturer}" Header="Manufacturer" />
+                        <DataGridTextColumn Binding="{Binding Model}" Header="Model" />
+                        <DataGridTextColumn Binding="{Binding Price, StringFormat=C}" Header="Price" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <GridSplitter
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                Margin="21.4,0,0.4,-0.2"
+                VerticalAlignment="Stretch" />
+
+            <GroupBox
+                Grid.Column="3"
+                Grid.ColumnSpan="2"
+                Margin="4.6,5,4.6,4.8"
+                DataContext="{Binding ElementName=DataGridCars, Path=SelectedItem}"
+                Header="Details">
+                <GroupBox.Style>
+                    <Style BasedOn="{StaticResource {x:Type GroupBox}}" TargetType="GroupBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=DataGridCars, Path=SelectedItem}" Value="{x:Null}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </GroupBox.Style>
+                <views:CarDetailView />
+            </GroupBox>
+
+        </Grid>
+    </DockPanel>
+</mah:MetroWindow>

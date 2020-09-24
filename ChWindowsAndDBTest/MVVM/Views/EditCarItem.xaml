@@ -1,0 +1,40 @@
+﻿<mah:MetroWindow x:Class="MVVM.Views.EditCarItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MVVM.Views"
+             d:DataContext="{d:DesignInstance model:Car}"
+             xmlns:model="clr-namespace:MVVM.Model" xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             mc:Ignorable="d" 
+                 Title="Edit Car"
+                 Width="400" SizeToContent="Height"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <DockPanel>
+        <UniformGrid DockPanel.Dock="Bottom" Columns="2">
+            <Button Content="Save and Exit"   Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:EditCarItem}, Path=SaveAndExitCommand}"/>
+            <Button Content="Cancel" Click="Cancel_Click" />
+            <!--Click="SaveAndExit_Click"-->
+        </UniformGrid>
+        
+        <ScrollViewer>
+            <StackPanel>
+                <mah:MetroHeader Header="ID">
+                    <TextBox Text="{Binding ID, StringFormat=N0}" IsReadOnly="True" mah:TextBoxHelper.Watermark="The ID will be generated automatically" />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Manufacturer">
+                    <TextBox Text="{Binding Manufacturer}"   />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Model">
+                    <TextBox Text="{Binding Model}"   />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Price">
+                    <mah:NumericUpDown Value="{Binding Price, StringFormat=C}" Minimum="0" />
+                </mah:MetroHeader>
+                <mah:MetroHeader Header="Discount">
+                    <mah:NumericUpDown Value="{Binding Discount, StringFormat=C}" Minimum="0" />
+                </mah:MetroHeader>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</mah:MetroWindow>
